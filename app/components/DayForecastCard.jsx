@@ -1,21 +1,27 @@
+import { formatDayOnly } from "../libs/dateFormat";
 
-const DayForecastCard = () => {
+const DayForecastCard = ({ data }) => {
+
+  if (!data) {
+    return null; 
+  }
+
+  const dayName = formatDayOnly(data[0].dt_txt.split(' ')[0]);
+  const iconUrl = `http://openweathermap.org/img/wn/${data[0].weather[0].icon}.png`;
+  const maxTemp = Math.round(data[0].main.temp_max);
+  const minTemp = Math.round(data[0].main.temp_min);
+
+
   return (
-    <div className="flex justify-center gap-10">
-    <span className="text-[20px] font-semibold">Tuesday</span>
-    <img
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSG69b353uxhM9LshXyuDjD5eoQPEH3WeSu2cdnLfVcInffhddrVLqlMy9fXENi6hVbjxA&usqp=CAU"
-      alt=""
-      width={30}
-      height={30}
-    />
-    <div>
-    <span className="text-[20px] font-semibold">73°</span > / <span className="text-[20px] font-semibold">65°</span>
+    <div className="flex shadow-lg p-1  justify-between gap-10">
+      <span className="text-[20px] font-semibold">{dayName}</span>
+      <img src={iconUrl} alt="Logo" width={30} height={30} />
+      <div>
+        <span className="text-[20px] font-semibold">{maxTemp}°</span> /{' '}
+        <span className="text-[20px] font-semibold">{minTemp}°</span>
+      </div>
     </div>
-    
-  </div>  
-  )
-}
+  );
+};
 
-
-export default DayForecastCard
+export default DayForecastCard;

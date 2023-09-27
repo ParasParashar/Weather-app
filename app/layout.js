@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className="flex">
       <body className={inter.className}>
         <main className="flex max-md:flex-col ">
-          <SearchSide />
+          {/* <SearchSide /> */}
           <div>{children}</div>
         </main>
       </body>
