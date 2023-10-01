@@ -65,10 +65,10 @@ export default function Sidebar({ data }) {
                       {data.map((item) => (
                         <DayHourlyForecast
                           key={item.dt_txt.split(" ")[0]}
-                          maxTemp={item.main.temp_max}
-                          minTemp={item.main.temp_min}
+                          temp={item.main.temp}
                           icon={item.weather[0].icon}
                           time={item.dt_txt}
+                          description={item.weather[0].main}
                         />
                       ))}
                     </div>

@@ -9,10 +9,10 @@ body{
     color:black;
 }
 .bgcolorDeatils{
-    @apply  bg-gradient-to-t from-amber-100 to-slate-500
+    @apply  bg-gradient-to-t from-amber-100 to-slate-500 
 }
 .bgcolorDeatils2{
-    @apply bg-gradient-to-b from-gray-300 to-slate-600/70
+    @apply bg-gradient-to-b from-slate-500 to-amber-200 
 }
 .bg-Main{
     @apply bg-gradient-to-b  from-slate-900 to-neutral-800
