@@ -1,15 +1,11 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import DeatilsSide from "./components/DeatilsSide";
+import MainCard from "./components/MainCard";
 
 export default function Home() {
-  
   return (
-    <main className="">
-    <DeatilsSide 
-        />
-  
-    </main>
+    <main className="min-h-screen bg-Main flex items-center justify-center">
+      <div className="mx-auto p-0 rounded-lg md:p-10  ">
+        <MainCard/>
+      </div>
+    </main> 
   );
 }

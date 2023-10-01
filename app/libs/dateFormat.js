@@ -21,6 +21,7 @@ const monthNames = [
   "November",
   "December",
 ];
+
 export const formatDate = (timestamp) => {
   const datetime = new Date(timestamp * 1000);
   const dayOfWeek = days[datetime.getDay()];
@@ -30,11 +31,18 @@ export const formatDate = (timestamp) => {
 
   return `${dayOfWeek} ${dayOfMonth} ${month}`;
 };
+
 export const formatDayOnly=(date)=>{
   const dateOnly = new Date(date)
+  const currentDate =days[ new Date().getDay()];
   const day = days[dateOnly.getDay()]
-  return day;
+  if(day === currentDate){
+    return 'Today'
+  }else{
+    return day;
+  }
 };
+
 export function formatTime(dt_txt) {
   const date = new Date(dt_txt);
   const hours = date.getHours();
@@ -46,25 +54,16 @@ export function formatTime(dt_txt) {
 
   return `${formattedHours}:${formattedMinutes} ${ampm}`;
 }
+export  const filterDailyForecast = (forecastList) => {
+  const dailyForecast = {};
 
- // const filterDailyForecast = (forecastList) => {
-  //   const dailyForecast = forecastList.reduce((acc, item) => {
-  //     const date = item.dt_txt.split(' ')[0];
-  
-  //     // Check if the date is already in the accumulator
-  //     const existingDay = acc.find((day) => day.date === date);
-  
-  //     if (existingDay) {
-  //       existingDay.forecast.push(item);
-  //     } else {
-  //       acc.push({
-  //         date,
-  //         forecast: [item],
-  //       });
-  //     }
-  
-  //     return acc;
-  //   }, []);
-  
-  //   return dailyForecast;
-  // };
+  forecastList.forEach((item) => {
+    const date = item.dt_txt.split(" ")[0];
+
+    if (!dailyForecast[date]) {
+      dailyForecast[date] = [];
+    }
+    dailyForecast[date].push(item);
+  });
+  return dailyForecast;
+};

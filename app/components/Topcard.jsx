@@ -1,19 +1,7 @@
 import React from 'react'
 import {formatDate} from "../libs/dateFormat"
 const Topcard = ({icon, country,name,description,temp}) => {
-  const days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  
-  let datetime = new Date(1695826800 * 1000);  
-  
-  let date = datetime.toDateString();
+
   // let day = days[datetime.getDay()];
   return (
     <div className="flex  items-center flex-col gap-1">

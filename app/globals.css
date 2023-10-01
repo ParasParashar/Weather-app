@@ -2,17 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.bgcolor{
-    background:linear-gradient(rgba(11, 208, 238, 0.247),rgba(4, 16, 239, 0.416));
-    
+body{
+    color:black;
+}
+*{
+    color:black;
 }
 .bgcolorDeatils{
-    /* background:linear-gradient(rgba(3, 182, 209, 0.701),rgba(4, 16, 239, 0.581)); */
-    @apply bg-gradient-to-b  to-sky-500 from-[#d1bb79d1] 
-    
+    @apply  bg-gradient-to-t from-amber-100 to-slate-500
 }
-.bgtop{
-    background:linear-gradient(rgba(3, 182, 209, 0.327),rgba(4, 16, 239, 0.229));
-    
+.bgcolorDeatils2{
+    @apply bg-gradient-to-b from-gray-300 to-slate-600/70
+}
+.bg-Main{
+    @apply bg-gradient-to-b  from-slate-900 to-neutral-800
+
 }

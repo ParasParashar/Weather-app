@@ -1,64 +1,72 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import SearchBar from "./SearchBar";
 import DayForecastCard from "./DayForecastCard";
 import HourCard from "./HourCard";
 import Topcard from "./Topcard";
+import Loader from "./Loader";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
+import { filterDailyForecast } from "../libs/dateFormat";
 
-const DeatilsSide = () => {
+const MainCard = () => {
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const [details, setDetails] = useState({});
   const [foreCast, setForecast] = useState([]);
   const [hourlyForecast, sethourlyForecast] = useState([]);
-  //for main top card or for fetch the details of current Day
+  const searchParams = useSearchParams();
+
+  const city = searchParams.get("search") || "jaipur";
+
+  //for main top card or for fetch the details of the current Day
   useEffect(() => {
     axios
       .get(
-        "https://api.openweathermap.org/data/2.5/weather/?q=jaipur&units=metric&APPID=73009497cbc082d8b80a2e8dc748fd55"
+        `https://api.openweathermap.org/data/2.5/weather/?q=${city}&units=metric&APPID=${apiKey}`
       )
       .then((res) => {
         setDetails(res.data);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 404) {
+          setDetails({});
+        } else {
+          console.error("An error occurred:", error);
+        }
       });
-    // for fetch the request for forecast
+    // for fetching the request for forecast
 
     axios
       .get(
-        "https://api.openweathermap.org/data/2.5/forecast/?q=jaipur&units=metric&APPID=73009497cbc082d8b80a2e8dc748fd55"
+        `https://api.openweathermap.org/data/2.5/forecast/?q=${city}&units=metric&APPID=${apiKey}`
       )
       .then((res) => {
         setForecast(filterDailyForecast(res.data.list));
         const dailyForecast = filterDailyForecast(res.data.list);
         const hourlyData = dailyForecast[Object.keys(dailyForecast)[1]];
-        console.log(hourlyData, "hourlydata");
         sethourlyForecast(hourlyData);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 404) {
+          sethourlyForecast([]);
+          setForecast([]);
+        } else {
+          console.error("An error occurred:", error);
+        }
       });
-  }, []);
-
-  const filterDailyForecast = (forecastList) => {
-    const dailyForecast = {};
-
-    forecastList.forEach((item) => {
-      const date = item.dt_txt.split(" ")[0];
-      const time = item.dt_txt.split(" ")[1];
-
-      if (!dailyForecast[date]) {
-        dailyForecast[date] = [];
-      }
-
-      // if (time === '21:00:00') {
-      //   dailyForecast[date].push(item);
-      // }
-      dailyForecast[date].push(item);
-    });
-    return dailyForecast;
-  };
+  }, [city]);
 
   if (!details.main) {
-    return <div>Loading...</div>;
+    return (
+    <Loader/>
+    );
   }
 
+
   return (
-    <div className="h-screen max-md:w-screen bgcolorDeatils max-md:h-full p-2">
-      <div className="text-white flex items-center flex-col">
+    <div className="min-h-screen bgcolorDeatils px-2 flex items-center justify-center overflow-x-hidden md:rounded-lg">
+      <div className=" flex flex-col items-center">
+        <SearchBar/>
         {/* top */}
         <Topcard
           name={details.name}
@@ -68,7 +76,7 @@ const DeatilsSide = () => {
           description={details.weather[0].main}
         />
         {/* mid */}
-        <div className="flex justify-center gap-10 mt-4">
+        <div className="flex flex-wrap items-center justify-center gap-10 mt-4">
           {hourlyForecast.map((hourData, index) => (
             <HourCard
               key={index}
@@ -89,4 +97,4 @@ const DeatilsSide = () => {
   );
 };
 
-export default DeatilsSide;
+export default MainCard;
