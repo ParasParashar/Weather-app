@@ -22,7 +22,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
           script: |
-            cd /path/to/your/project
+            cd /home/ubuntu/Weather-app
             git pull origin main
             npm install
             npm run build
