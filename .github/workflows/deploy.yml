@@ -25,7 +25,6 @@ jobs:
             cd /home/ubuntu/Weather-app
             git pull origin main
             npm install
-             rm -rf .next
             npm run build
             pm2 restart weather-app || pm2 start ecosystem.config.js
             pm2 save

@@ -1,13 +1,12 @@
 import DayForecastCard from "./DayForecastCard";
 import HourCard from "./HourCard";
-import TopCard from "./TopCard";
+import TopCard from "./Topcard";
 import { filterDailyForecast } from "../libs/dateFormat";
 import SearchBar from "./SearchBar";
 import { Droplets, Gauge, Thermometer, Wind } from "lucide-react";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 async function getWeatherData(city) {
-  console.log(city, "current city data");
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   try {
