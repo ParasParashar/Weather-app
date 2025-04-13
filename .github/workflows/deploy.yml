@@ -26,4 +26,5 @@ jobs:
             git pull origin main
             npm install
             npm run build
-            npm run start
+            pm2 start npm --name "weather-app" --run start 
+            pm2 save
