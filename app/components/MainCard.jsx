@@ -15,7 +15,7 @@ const MainCard = () => {
   const [foreCast, setForecast] = useState([]);
   const [hourlyForecast, sethourlyForecast] = useState([]);
   const searchParams = useSearchParams();
-
+  console.log("api key", apiKey);
   const city = searchParams.get("search") || "jaipur";
 
   //for main top card or for fetch the details of the current Day
@@ -57,16 +57,13 @@ const MainCard = () => {
   }, [city]);
 
   if (!details.main) {
-    return (
-    <Loader/>
-    );
+    return <Loader />;
   }
-
 
   return (
     <div className="min-h-screen bgcolorDeatils px-2 flex items-center justify-center overflow-x-hidden md:rounded-lg">
       <div className=" flex flex-col items-center">
-        <SearchBar/>
+        <SearchBar />
         {/* top */}
         <Topcard
           name={details.name}
