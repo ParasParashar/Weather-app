@@ -1,28 +1,32 @@
 "use client";
-import { useState } from "react";
+
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
-const SearchBar = () => {
-    const router = useRouter();
-  const [search, setSearch] = useState("");
+import { useState } from "react";
+
+export default function SearchBar({ defaultValue }) {
+  const [search, setSearch] = useState(defaultValue || "");
+  const router = useRouter();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    router.push(`?search=${search}`);
+    if (search.trim()) {
+      router.push(`/?search=${encodeURIComponent(search)}`);
+    }
   };
+
   return (
-    <form onSubmit={handleSubmit} className="flex  items-center p-2 bg-neutral-100/30 my-2  rounded-md">
-      <input
-        type="text"
-        value={search}
-        placeholder="Search City,Country or State......"
-        onChange={(e) => setSearch(e.target.value)}
-        className="p-2 bg-neutral-100 rounded-lg text-black"
-      />
-      <button type="submit" className="p-1 rounded-lg hover:bg-blue-100/20">
-        <Search />
-      </button>
+    <form onSubmit={handleSubmit} className="relative">
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <input
+          type="text"
+          placeholder="Search for a city..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full pl-10 pr-4 py-2 bg-background border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+        />
+      </div>
     </form>
   );
-};
-
-export default SearchBar;
+}
