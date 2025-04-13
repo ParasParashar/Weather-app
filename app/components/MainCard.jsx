@@ -15,7 +15,7 @@ const MainCard = () => {
   const [foreCast, setForecast] = useState([]);
   const [hourlyForecast, sethourlyForecast] = useState([]);
   const searchParams = useSearchParams();
-  console.log("api key", apiKey);
+
   const city = searchParams.get("search") || "jaipur";
 
   //for main top card or for fetch the details of the current Day
